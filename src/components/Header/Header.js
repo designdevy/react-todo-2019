@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from 'grommet';
 
-const AppBar = props => (
+const Header = props => (
   <Box
     tag="header"
     align="center"
@@ -15,4 +15,4 @@ const AppBar = props => (
   />
 );
 
-export default AppBar;
+export default Header;

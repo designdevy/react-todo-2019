@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 
-import {
-  Box,
-  Button,
-  Collapsible,
-  Heading,
-  Grommet,
-  Layer,
-  ResponsiveContext,
-} from 'grommet';
+import { Box, Button, Heading, Grommet, ResponsiveContext } from 'grommet';
 
-import AppBar from '../AppBar';
+import Header from '../Header';
+import Sidebar from '../Sidebar';
+import Content from '../Content';
 
 import { theme, GlobalStyle } from '../../theme';
 
-import { FormClose, Notification } from '../../icons';
+import { Notification } from '../../icons';
 
 class Todo extends Component {
   constructor(props) {
@@ -93,80 +87,32 @@ class Todo extends Component {
 
   render() {
     const { showSidebar, userName, todoItems } = this.state;
+
     return (
       <Grommet theme={theme} full>
         <GlobalStyle />
         <ResponsiveContext.Consumer>
           {size => (
             <Box fill>
-              <AppBar>
+              <Header>
                 <Heading level="3" margin="none">
                   {userName}&apos;s Todo List (
                   {todoItems.filter(t => !t.done).length} items to do)
                 </Heading>
                 <Button icon={<Notification />} onClick={this.toggleSidebar} />
-              </AppBar>
+              </Header>
               <Box direction="row" flex overflow={{ horizontal: 'hidden' }}>
-                <Box flex align="center" justify="center">
-                  <div>
-                    <div>
-                      <input
-                        type="input"
-                        value={this.state.newItemText}
-                        onChange={e => this.updateNewTextValue(e)}
-                      />
-                      <button onClick={this.createNewTodo} type="button">
-                        Add
-                      </button>
-                    </div>
-                    <div>
-                      <table>
-                        <thead>
-                          <tr>
-                            <th>Description</th>
-                            <th>Done</th>
-                          </tr>
-                        </thead>
-                        <tbody>{this.todoTableRows()}</tbody>
-                      </table>
-                    </div>
-                  </div>
-                </Box>
-
-                {!showSidebar || size !== 'small' ? (
-                  <Collapsible direction="horizontal" open={showSidebar}>
-                    <Box
-                      flex
-                      width="medium"
-                      background="light-2"
-                      elevation="small"
-                      align="center"
-                      justify="center"
-                    >
-                      sidebar
-                    </Box>
-                  </Collapsible>
-                ) : (
-                  <Layer>
-                    <Box
-                      background="light-2"
-                      tag="header"
-                      justify="end"
-                      align="center"
-                      direction="row"
-                    >
-                      <Button icon={<FormClose />} onClick={this.hideSidebar} />
-                    </Box>
-                    <Box
-                      fill
-                      background="light-2"
-                      align="center"
-                      justify="center"
-                    >
-                      sidebar
-                    </Box>
-                  </Layer>
-                )}
+                <Content
+                  newItemText={this.state.newItemText}
+                  updateNewTextValue={this.updateNewTextValue}
+                  createNewTodo={this.createNewTodo}
+                  todoTableRows={this.todoTableRows}
+                />
+                <Sidebar
+                  size={size}
+                  showSidebar={showSidebar}
+                  hideSidebar={this.hideSidebar}
+                />
               </Box>
             </Box>
           )}
