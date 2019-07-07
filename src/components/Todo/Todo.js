@@ -36,6 +36,16 @@ class Todo extends Component {
     this.hideSidebar = this.hideSidebar.bind(this);
     this.updateNewTextValue = this.updateNewTextValue.bind(this);
     this.createNewTodo = this.createNewTodo.bind(this);
+    this.toggleTodo = this.toggleTodo.bind(this);
+    this.todoTableRows = this.todoTableRows.bind(this);
+  }
+
+  toggleTodo(todo) {
+    this.setState(prevState => ({
+      todoItems: prevState.todoItems.map(item =>
+        item.action === todo.action ? { ...item, done: !item.done } : item,
+      ),
+    }));
   }
 
   createNewTodo() {
@@ -46,6 +56,21 @@ class Todo extends Component {
         newItemText: 'Placeholder',
       }));
     }
+  }
+
+  todoTableRows() {
+    return this.state.todoItems.map(item => (
+      <tr key={item.action}>
+        <td>{item.action}</td>
+        <td>
+          <input
+            type="checkbox"
+            checked={item.done}
+            onChange={() => this.toggleTodo(item)}
+          />
+        </td>
+      </tr>
+    ));
   }
 
   updateNewTextValue(e) {
@@ -93,6 +118,17 @@ class Todo extends Component {
                       <button onClick={this.createNewTodo} type="button">
                         Add
                       </button>
+                    </div>
+                    <div>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Description</th>
+                            <th>Done</th>
+                          </tr>
+                        </thead>
+                        <tbody>{this.todoTableRows()}</tbody>
+                      </table>
                     </div>
                   </div>
                 </Box>
