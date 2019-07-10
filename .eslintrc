@@ -61,5 +61,12 @@
         "react/no-multi-comp": 0
       }
     }
-  ]
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  }
 }

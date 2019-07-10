@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Box, Button, Collapsible, Layer } from 'grommet';
 
-import { FormClose } from '../../icons';
+import { FormClose } from 'icons';
 
 const Sidebar = props => {
   return (

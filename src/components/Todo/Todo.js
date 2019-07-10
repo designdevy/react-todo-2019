@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 
-import { Box, Button, Heading, Grommet, ResponsiveContext } from 'grommet';
+import { Box, Grommet, ResponsiveContext } from 'grommet';
 
-import Header from '../Header';
-import Sidebar from '../Sidebar';
-import Content from '../Content';
-
-import { theme, GlobalStyle } from '../../theme';
-
-import { Notification } from '../../icons';
+import { theme, GlobalStyle } from 'theme';
+import Header from 'components/Header';
+import Dashboard from 'components/Dashboard';
 
 class Todo extends Component {
   constructor(props) {
@@ -23,7 +19,7 @@ class Todo extends Component {
         { action: 'Collect Tickets', done: true },
         { action: 'Call Joe', done: false },
       ],
-      newItemText: 'Placeholder',
+      newItemText: '',
     };
 
     this.toggleSidebar = this.toggleSidebar.bind(this);
@@ -47,7 +43,7 @@ class Todo extends Component {
     if (!this.state.todoItems.find(item => item.action === newItem)) {
       this.setState(prevState => ({
         todoItems: [...prevState.todoItems, { action: newItem, done: false }],
-        newItemText: 'Placeholder',
+        newItemText: '',
       }));
     }
   }
@@ -94,26 +90,20 @@ class Todo extends Component {
         <ResponsiveContext.Consumer>
           {size => (
             <Box fill>
-              <Header>
-                <Heading level="3" margin="none">
-                  {userName}&apos;s Todo List (
-                  {todoItems.filter(t => !t.done).length} items to do)
-                </Heading>
-                <Button icon={<Notification />} onClick={this.toggleSidebar} />
-              </Header>
-              <Box direction="row" flex overflow={{ horizontal: 'hidden' }}>
-                <Content
-                  newItemText={this.state.newItemText}
-                  updateNewTextValue={this.updateNewTextValue}
-                  createNewTodo={this.createNewTodo}
-                  todoTableRows={this.todoTableRows}
-                />
-                <Sidebar
-                  size={size}
-                  showSidebar={showSidebar}
-                  hideSidebar={this.hideSidebar}
-                />
-              </Box>
+              <Header
+                userName={userName}
+                todoItems={todoItems}
+                toggleSidebar={this.toggleSidebar}
+              />
+              <Dashboard
+                newItemText={this.state.newItemText}
+                updateNewTextValue={this.updateNewTextValue}
+                createNewTodo={this.createNewTodo}
+                todoTableRows={this.todoTableRows}
+                size={size}
+                showSidebar={showSidebar}
+                hideSidebar={this.hideSidebar}
+              />
             </Box>
           )}
         </ResponsiveContext.Consumer>

@@ -1,21 +1,34 @@
 import React from 'react';
 
-import { Box } from 'grommet';
+import { Box, TextInput, Button } from 'grommet';
+
+import { theme } from 'theme';
 
 const Content = props => {
   return (
     <Box flex align="center" justify="center">
       <div>
-        <div>
-          <input
-            type="input"
-            value={props.newItemText}
-            onChange={e => props.updateNewTextValue(e)}
-          />
-          <button onClick={props.createNewTodo} type="button">
-            Add
-          </button>
-        </div>
+        <Box direction="row">
+          <Box pad="small">
+            <TextInput
+              placeholder="type here.."
+              value={props.newItemText}
+              onChange={e => props.updateNewTextValue(e)}
+            />
+          </Box>
+          <Box pad="small">
+            <Button
+              onClick={props.createNewTodo}
+              type="button"
+              label="Add"
+              primary
+              color="brand"
+              style={{
+                color: `${theme.button.text.color}`,
+              }}
+            />
+          </Box>
+        </Box>
         <div>
           <table>
             <thead>
